@@ -2,6 +2,7 @@ package com.cj.techdrop.shimmerrecycleview;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,19 +22,19 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
 
     private Context mcontext;
     NotificationBean notificationbean;
-    public ArrayList<NotificationBean> messageList;
+    private ArrayList<NotificationBean> messageList;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         public String text;
-        public TextView titleText, createdDate, textView, attachmentText;
-        public ImageButton reminderButton, notificationDelete;
+        private TextView titleText, createdDate, textView, attachmentText;
+        private ImageButton reminderButton, notificationDelete;
         public Button typeButton;
-        public ImageView displayIcon;
-        public RelativeLayout notificationLayout;
-        public LinearLayout attachment_button;
+        private ImageView displayIcon;
+        private RelativeLayout notificationLayout;
+        private LinearLayout attachment_button;
 
-        public MyViewHolder(View view) {
+        private MyViewHolder(View view) {
             super(view);
             textView = view.findViewById(R.id.list_item_textview);
             createdDate = view.findViewById(R.id.list_item_date_textview);
@@ -47,9 +48,10 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
         }
     }
 
-    public NotificationListAdapter(Context mcontext, ArrayList<NotificationBean> templist) {
+    NotificationListAdapter(Context mcontext, ArrayList<NotificationBean> templist) {
         this.mcontext = mcontext;
         this.messageList = templist;
+        Log.d("templist", "" + templist);
     }
 
     @Override
@@ -61,10 +63,11 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder viewHolder, int position) {
-
+    public void onBindViewHolder(MyViewHolder viewHolder, final int position) {
 
         try {
+            viewHolder.titleText.setTypeface(null, Typeface.NORMAL);
+            Log.d("type", "" + messageList.get(position).getNotificationType());
             Integer type = Integer.valueOf(messageList.get(position).getNotificationType());
             Log.d("log", "" + type);
             if (type == 1 || type == 6) {
